@@ -14,8 +14,9 @@ export class OpenAIController {
   async generateResponse(
     @Body('messages') messages:OpenAI.Chat.ChatCompletionMessageParam[],
     @Body('userId') userId: string,
+    @Body('brandId') brandId: string,
   ): Promise<{ response: string }> {
-    const response = await this.openaiService.generateChatCompletion(messages, userId);
+    const response = await this.openaiService.generateChatCompletion(messages, userId, brandId);
     return { response };
   }
 } 

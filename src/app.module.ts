@@ -1,12 +1,19 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
+import { RedisModule } from '@nestjs-modules/ioredis';
 import { ChatHistoryModule } from './chat-history/chat-history.module';
 import { OpenAIModule } from './openai/openai.module';
-import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    RedisModule.forRoot({
+      type: 'single',
+      options: {
+        host: process.env.REDIS_HOST || 'localhost',
+        port: parseInt(process.env.REDIS_PORT || '6379', 10),
+      },
+    }),
     ChatHistoryModule,
     OpenAIModule,
   ],

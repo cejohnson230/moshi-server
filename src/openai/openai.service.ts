@@ -19,8 +19,8 @@ export class OpenAIService {
     });
   }
 
-  async generateChatCompletion(new_messages: OpenAI.Chat.ChatCompletionMessageParam[], userId: string): Promise<string> {
-    const previousMessages = await this.chatHistoryService.getChatHistory(userId);
+  async generateChatCompletion(new_messages: OpenAI.Chat.ChatCompletionMessageParam[], userId: string, brandId: string): Promise<string> {
+    const previousMessages = await this.chatHistoryService.getChatHistory(userId, brandId);
     
     const messages = [
       ...previousMessages.map(msg => ({
@@ -42,8 +42,9 @@ export class OpenAIService {
       fullResponse += content;
     }
 
-   // await this.chatHistoryService.saveMessage(userId, 'user', prompt);
-    await this.chatHistoryService.saveMessage(userId, 'assistant', fullResponse);
+    await this.chatHistoryService.saveMessage(userId, brandId, 'user', messages.pop().content.toString());
+    await this.chatHistoryService.saveMessage(userId, brandId, 'assistant', fullResponse);
+
 
     return fullResponse;
   }
