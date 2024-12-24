@@ -1,4 +1,4 @@
-# NestJS Chat Application
+# Moshi Chat API
 
 A NestJS-based chat application that integrates with OpenAI's API and maintains chat history using Redis.
 
