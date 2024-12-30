@@ -19,16 +19,7 @@ export class OpenAIService {
     });
   }
 
-  async generateChatCompletion(new_messages: OpenAI.Chat.ChatCompletionMessageParam[], userId: string, brandId: string): Promise<string> {
-    const previousMessages = await this.chatHistoryService.getChatHistory(userId, brandId);
-    
-    const messages = [
-      ...previousMessages.map(msg => ({
-        role: msg.role,
-        content: msg.content,
-      })),
-      ...new_messages
-    ];
+  async generateChatCompletion(messages: OpenAI.Chat.ChatCompletionMessageParam[], userId: string, brandId: string): Promise<string> {
 
     const stream = await this.openai.chat.completions.create({
       model: 'gpt-4o-mini',
